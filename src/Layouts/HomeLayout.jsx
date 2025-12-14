@@ -1,6 +1,7 @@
 import React from "react";
 import Home from "../Components/Home";
 import Marquee from "react-fast-marquee";
+import Navbar from "../Components/Navbar";
 
 const HomeLayout = () => {
   return (
@@ -14,6 +15,9 @@ const HomeLayout = () => {
             eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
           </p>
         </Marquee>
+      </div>
+      <div className="w-11/12 mx-auto mt-6">
+        <Navbar></Navbar>
       </div>
       <div className="left nav"></div>
       <main></main>
