@@ -11,7 +11,7 @@ const AllCategory = () => {
         <NavLink
           key={category.id}
           className=" btn bg-base-100 border-0 hover:bg-base-100 font-semibold text-base-300 "
-          to={`/categories/${category.id}`}
+          to={`/category/${category.id}`}
         >
           {category.name}
         </NavLink>
