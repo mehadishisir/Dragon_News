@@ -31,7 +31,7 @@ const HomeLayout = () => {
           <Outlet></Outlet>
         </section>
 
-        <aside className="grid col-span-3 not-first-of-type:">
+        <aside className="grid col-span-3 sticky top-0 h-fit">
           <RightAside></RightAside>
         </aside>
       </main>
