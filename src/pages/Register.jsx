@@ -1,13 +1,31 @@
-import React from "react";
+import React, { use } from "react";
+import { Link } from "react-router";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
+  const { registerUser } = use(AuthContext);
+  console.log(registerUser);
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const photo = e.target.photo.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    console.log({ name, photo, email, password });
+    registerUser(email, password).then((userCredential) => {
+      // Signed up
+      const user = userCredential.user;
+      console.log(user);
+      // ..
+    });
+  };
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200">
       <div className="card w-full max-w-sm shadow-xl bg-base-100">
         <div className="card-body">
           <h2 className="text-center text-2xl font-bold">Register</h2>
 
-          <form className="space-y-4">
+          <form onSubmit={handleRegister} className="space-y-4">
             {/* Name */}
             <div className="form-control">
               <label className="label">
@@ -15,6 +33,7 @@ const Register = () => {
               </label>
               <input
                 type="text"
+                name="name"
                 placeholder="Your name"
                 className="input input-bordered"
               />
@@ -27,6 +46,7 @@ const Register = () => {
               </label>
               <input
                 type="text"
+                name="photo"
                 placeholder="https://example.com/photo.jpg"
                 className="input input-bordered"
               />
@@ -39,6 +59,7 @@ const Register = () => {
               </label>
               <input
                 type="email"
+                name="email"
                 placeholder="email@example.com"
                 className="input input-bordered"
               />
@@ -51,6 +72,7 @@ const Register = () => {
               </label>
               <input
                 type="password"
+                name="password"
                 placeholder="••••••••"
                 className="input input-bordered"
               />
@@ -58,13 +80,20 @@ const Register = () => {
 
             {/* Register Button */}
             <div className="form-control mt-4">
-              <button className="btn btn-primary w-full">Register</button>
+              <button type="submit" className="btn btn-primary w-full">
+                Register
+              </button>
             </div>
           </form>
 
           <p className="text-center text-sm mt-2">
             Already have an account?{" "}
-            <span className="link link-primary cursor-pointer">Login</span>
+            <Link
+              to="/auth/register"
+              className="link link-primary cursor-pointer"
+            >
+              Login
+            </Link>
           </p>
         </div>
       </div>

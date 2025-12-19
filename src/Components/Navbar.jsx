@@ -4,11 +4,11 @@ import user from "../assets/user.png";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Navbar = () => {
-  const { user } = use(AuthContext);
+  const { User } = use(AuthContext);
 
   return (
     <div className="flex justify-between items-center ">
-      <div>{user.email}</div>
+      <div></div>
       <div className="flex gap-2 text-base-300">
         <NavLink to={"/"}>Home</NavLink>
         <NavLink to={"/about"}>About</NavLink>
