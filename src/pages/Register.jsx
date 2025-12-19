@@ -3,8 +3,8 @@ import { Link } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
-  const { registerUser } = use(AuthContext);
-  console.log(registerUser);
+  const { registerUser, setUser } = use(AuthContext);
+
   const handleRegister = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
@@ -12,12 +12,20 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log({ name, photo, email, password });
-    registerUser(email, password).then((userCredential) => {
-      // Signed up
-      const user = userCredential.user;
-      console.log(user);
-      // ..
-    });
+    registerUser(email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        console.log(user);
+        setUser(user);
+        // ..
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+        console.log(errorMessage);
+      });
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200">
@@ -88,10 +96,7 @@ const Register = () => {
 
           <p className="text-center text-sm mt-2">
             Already have an account?{" "}
-            <Link
-              to="/auth/register"
-              className="link link-primary cursor-pointer"
-            >
+            <Link to="/auth/login" className="link link-primary cursor-pointer">
               Login
             </Link>
           </p>
