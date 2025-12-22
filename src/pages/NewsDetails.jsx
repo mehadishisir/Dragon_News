@@ -8,11 +8,11 @@ const NewsDetails = () => {
   const data = useLoaderData();
   const { id } = useParams();
   const [news, setNews] = useState([]);
-  console.log(id);
+  //   console.log(id);
   useEffect(() => {
     const newsDetails = data.find((singleNews) => singleNews.id == id);
     setNews(newsDetails);
-    console.log(news);
+    // console.log(news);
   }, [id, data]);
   return (
     <div className="space-y-5">
