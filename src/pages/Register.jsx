@@ -1,32 +1,46 @@
 import React, { use } from "react";
+import { useState } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
   const { registerUser, setUser } = use(AuthContext);
 
+  const [error, setError] = useState("");
+
+  const getRegisterErrorMessage = (error) => {
+    switch (error.code) {
+      case "auth/email-already-in-use":
+        return "Email already in use";
+      case "auth/invalid-email":
+        return "Invalid email address";
+      case "auth/weak-password":
+        return "Password should be at least 6 characters";
+      default:
+        return "Something went wrong. Please try again.";
+    }
+  };
+
   const handleRegister = (e) => {
     e.preventDefault();
+    setError("");
+
     const name = e.target.name.value;
     const photo = e.target.photo.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log({ name, photo, email, password });
+
     registerUser(email, password)
       .then((userCredential) => {
-        // Signed up
         const user = userCredential.user;
         console.log(user);
         setUser(user);
-        // ..
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-        console.log(errorMessage);
+        setError(getRegisterErrorMessage(error));
       });
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200">
       <div className="card w-full max-w-sm shadow-xl bg-base-100">
@@ -44,6 +58,7 @@ const Register = () => {
                 name="name"
                 placeholder="Your name"
                 className="input input-bordered"
+                required
               />
             </div>
 
@@ -57,6 +72,7 @@ const Register = () => {
                 name="photo"
                 placeholder="https://example.com/photo.jpg"
                 className="input input-bordered"
+                required
               />
             </div>
 
@@ -70,6 +86,7 @@ const Register = () => {
                 name="email"
                 placeholder="email@example.com"
                 className="input input-bordered"
+                required
               />
             </div>
 
@@ -83,8 +100,15 @@ const Register = () => {
                 name="password"
                 placeholder="••••••••"
                 className="input input-bordered"
+                required
+                minLength={6}
               />
             </div>
+
+            {/* Error message */}
+            {error && (
+              <p className="text-red-500 text-sm text-center">{error}</p>
+            )}
 
             {/* Register Button */}
             <div className="form-control mt-4">
