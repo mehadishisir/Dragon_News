@@ -22,7 +22,7 @@ const CategoryNews = () => {
       setCategories(filterNews);
     }
   }, [data, id]);
-  console.log(id, data);
+  // console.log(id, data);
   return (
     <div>
       {" "}

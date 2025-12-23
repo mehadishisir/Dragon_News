@@ -1,7 +1,9 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 const NewsDetailsCard = ({ news }) => {
+  const location = useLocation();
+  //   console.log(location);
   //   console.log(news);
   return (
     <div className="space-y-5">

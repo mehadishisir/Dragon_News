@@ -4,7 +4,7 @@ const categories = fetch("/categories.json").then((res) => res.json());
 
 const AllCategory = () => {
   const allCategories = use(categories);
-  console.log(allCategories);
+  // console.log(allCategories);
   return (
     <div className="grid grid-cols-1 gap-2 text-base-300">
       {allCategories.map((category) => (
