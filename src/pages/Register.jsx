@@ -1,12 +1,13 @@
 import React, { use } from "react";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
-  const { registerUser, setUser } = use(AuthContext);
+  const { registerUser, setUser, updateUser } = use(AuthContext);
 
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const getRegisterErrorMessage = (error) => {
     switch (error.code) {
@@ -34,7 +35,16 @@ const Register = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
-        setUser(user);
+
+        updateUser({ displayName: name, photoURL: photo })
+          .then(() => {
+            setUser({ ...user, displayName: name, photoURL: photo });
+            console.log(user);
+            navigate("/");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
         setError(getRegisterErrorMessage(error));
