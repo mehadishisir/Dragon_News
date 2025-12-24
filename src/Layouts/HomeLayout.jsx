@@ -2,11 +2,13 @@ import React from "react";
 import Home from "../Components/Home";
 import Marquee from "react-fast-marquee";
 import Navbar from "../Components/Navbar";
-import { Outlet } from "react-router";
+import { Outlet, useNavigation } from "react-router";
 import LeftAside from "./LeftAside";
 import RightAside from "./RightAside";
+import Loading from "../pages/Loading";
 
 const HomeLayout = () => {
+  const { state } = useNavigation();
   return (
     <div>
       <Home></Home>
@@ -28,7 +30,7 @@ const HomeLayout = () => {
         </aside>
 
         <section className="grid col-span-6">
-          <Outlet></Outlet>
+          {state == "loading" ? <Loading></Loading> : <Outlet></Outlet>}
         </section>
 
         <aside className="grid col-span-3 sticky top-0 h-fit">
