@@ -7,7 +7,7 @@ const Navbar = () => {
   const { user, logOut } = use(AuthContext);
   // console.log(user);
   const handleSignOut = () => {
-    console.log("clicked");
+    // console.log("clicked");
     logOut()
       .then(() => {
         // Sign-out successful.

@@ -1,37 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { useLoaderData, useParams } from "react-router";
-
-import NewsCard from "../Components/NewsCard";
+import NewsCard from "../components/NewsCard";
 
 const CategoryNews = () => {
-  const { id } = useParams();
+  const { id } = useParams(); //string
   const data = useLoaderData();
-  const [categories, setCategories] = useState([]);
+
+  const [categoryNews, setCategoryNews] = useState([]);
+
   useEffect(() => {
-    if (id == 0) {
-      setCategories(data);
+    if (!Array.isArray(data)) {
+      setCategoryNews([]);
       return;
-    } else if (id == 1) {
-      const breakingNews = data.filter(
+    }
+    if (id == "0") {
+      setCategoryNews(data);
+    } else if (id == "1") {
+      const filteredNews = data.filter(
         (news) => news.others.is_today_pick == true
       );
-      setCategories(breakingNews);
-      return;
+
+      setCategoryNews(filteredNews);
     } else {
-      const filterNews = data.filter((news) => news.category_id == id);
-      setCategories(filterNews);
+      const filteredNews = data.filter((news) => news.category_id == id);
+      setCategoryNews(filteredNews);
     }
-  }, [data, id]);
+  }, [id, data]);
+
   // console.log(id, data);
+
   return (
     <div>
-      {" "}
       <h2 className="font-bold mb-5">
-        Total <span className="text-secondary">{categories.length}</span> news
+        Total <span className="text-secondary">{categoryNews.length}</span> news
         Found
       </h2>
+
       <div className="grid grid-cols-1 gap-5">
-        {categories.map((news) => (
+        {categoryNews.map((news) => (
           <NewsCard key={news.id} news={news}></NewsCard>
         ))}
       </div>
